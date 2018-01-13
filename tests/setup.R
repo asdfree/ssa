@@ -1,5 +1,7 @@
 if ( .Platform$OS.type == 'windows' ) memory.limit( 256000 )
 
+options("lodown.cachaca.savecache"=FALSE)
+
 library(lodown)
 lodown( "ssa" , output_dir = file.path( getwd() ) )
 ssa_df <- readRDS( file.path( getwd() , "ssr_data/SSIPUF.rds" ) )
