@@ -84,13 +84,13 @@ ssa_df <-
 		
 		qc3706 = ( qc3750 + qc5152 + qc5306 ) ,
 		
-		any_earnings_2006 = ( annual_earnings_2006 > 0 ) ,
+		any_earnings_2006 = ( tot_cov_earn06 > 0 ) ,
 		
 		earnings_periods =
 			factor(
-				ifelse( ( tot_cov_earn5152 > 0 | tot_cov_earn5306 > 0 ) & ( tot_cov_earn3750 > 0 ) , 1 ,
+				ifelse( ( tot_cov_earn5152 > 0 | tot_cov_earn5306 > 0 ) & tot_cov_earn3750 > 0 , 1 ,
 				ifelse( ( tot_cov_earn5152 > 0 | tot_cov_earn5306 > 0 ) , 2 ,
-				ifelse( ( tot_cov_earn3750 > 0 ) , 3 , 4 ) ) ) ,
+				ifelse( tot_cov_earn3750 > 0 , 3 , 4 ) ) ) ,
 				levels = 1:4 ,
 				labels =
 					c( 'Earnings in both periods' , 'Earnings during 1951-2006 only' ,
@@ -163,12 +163,12 @@ stopifnot( chart_five_results[ 'Earnings in both periods' ] == 16 )
 stopifnot( chart_five_results[ 'Earnings during 1951-2006 only' ] == 55 )
 stopifnot( chart_five_results[ 'Earnings during 1937-1950 only' ] == 4 )
 stopifnot( chart_five_results[ 'No earnings' ] == 25 )
-nonzero_2006_earners <- ssa_df[ ssa_df[ , 'annual_earnings_2006' ] > 0 , 'annual_earnings_2006' ]
+nonzero_2006_earners <- ssa_df[ ssa_df[ , 'tot_cov_earn06' ] > 0 , 'tot_cov_earn06' ]
 stopifnot( round( mean( nonzero_2006_earners ) , 0 ) == 30953 )
 stopifnot( round( quantile( nonzero_2006_earners )[ 3 ] , 0 ) == 24000 )
-nonzero_2006_earners <- ssa_df[ ssa_df[ , 'annual_earnings_2006' ] > 0 , ]
-stopifnot( round( mean( nonzero_2006_earners[ , 'annual_earnings_2006' ] ) , 0 ) == 30953 )
-stopifnot( round( quantile( nonzero_2006_earners[ , 'annual_earnings_2006' ] )[ 3 ] , 0 ) == 24000 )
+nonzero_2006_earners <- ssa_df[ ssa_df[ , 'tot_cov_earn06' ] > 0 , ]
+stopifnot( round( mean( nonzero_2006_earners[ , 'tot_cov_earn06' ] ) , 0 ) == 30953 )
+stopifnot( round( quantile( nonzero_2006_earners[ , 'tot_cov_earn06' ] )[ 3 ] , 0 ) == 24000 )
 stopifnot( round( nrow( nonzero_2006_earners ) * 100 , -3 ) == 156280000 )
 earners_in_2006_by_sex <- table( nonzero_2006_earners[ , 'sex' ] ) * 100
 stopifnot( round( earners_in_2006_by_sex[ 'male' ] , -3 ) == 81576000 )
