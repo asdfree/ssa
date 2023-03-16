@@ -52,7 +52,7 @@ summed_quarters_5306 <-
 names( summed_quarters_5306 ) <- c( 'id' , 'qc5306' )
 earnings_2006 <- annual_df[ annual_df[ , 'year_earn' ] == 2006 , c( 'id' , 'annual_earnings' ) ]
 
-names( earnings_2006 ) <- c( 'id' , 'annual_earnings_2006' )
+names( earnings_2006 ) <- c( 'id' , 'tot_cov_earn06' )
 stopifnot( all( !is.na( ssa_df ) ) )
 
 before_nrow <- nrow( ssa_df )
@@ -88,14 +88,13 @@ ssa_df <-
 		
 		earnings_periods =
 			factor(
-				ifelse( ( tot_cov_earn5152 > 0 | tot_cov_earn5306 > 0 ) & tot_cov_earn3750 > 0 , 1 ,
+				ifelse( ( tot_cov_earn5152 > 0 | tot_cov_earn5306 > 0 ) & ( tot_cov_earn3750 > 0 ) , 1 ,
 				ifelse( ( tot_cov_earn5152 > 0 | tot_cov_earn5306 > 0 ) , 2 ,
 				ifelse( tot_cov_earn3750 > 0 , 3 , 4 ) ) ) ,
 				levels = 1:4 ,
 				labels =
 					c( 'Earnings in both periods' , 'Earnings during 1951-2006 only' ,
 						'Earnings during 1937-1950 only' , 'No earnings' ) )
-
 	)
 nrow( ssa_df )
 
