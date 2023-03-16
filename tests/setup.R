@@ -20,9 +20,9 @@ ssa_tbl <- read_sas( ssa_fn )
 
 annual_tbl <- read_sas( annual_fn )
 
-ssa_df <- data.frame( ssa_tbl )
+ssa_df <- data.frame( ssa_tbl ) ; rm( ssa_tbl ) ; gc()
 
-annual_df <- data.frame( annual_tbl )
+annual_df <- data.frame( annual_tbl ) ; rm( annual_tbl ) ; gc()
 
 names( ssa_df ) <- tolower( names( ssa_df ) )
 
