@@ -2,12 +2,13 @@
 # 
 # 
 library(haven)
+library(httr)
 
 tf <- tempfile()
 
 ssa_url <- "https://www.ssa.gov/policy/docs/microdata/epuf/epuf2006_sas_files.zip"
 
-download.file( ssa_url , tf , mode = 'wb' )
+GET( ssa_url , write_disk( tf ) )
 
 ssa_files <- unzip( tf , exdir = tempdir() )
 
@@ -15,9 +16,17 @@ demographic_fn <- grep( 'demographic' , ssa_files , value = TRUE )
 
 annual_fn <- grep( 'annual' , ssa_files , value = TRUE )
 
-demographic_df <- read_sas( demographic_fn )
+demographic_tbl <- read_sas( demographic_fn )
 
-annual_df <- read_sas( annual_fn )
+annual_tbl <- read_sas( annual_fn )
+
+demographic_df <- data.frame( demographic_tbl )
+
+annual_df <- data.frame( annual_tbl )
+
+names( demographic_df ) <- tolower( names( demographic_df ) )
+
+names( annual_df ) <- tolower( names( annual_df ) )
 # ssa_fn <- file.path( path.expand( "~" ) , "SSA" , "this_file.rds" )
 # saveRDS( ssa_df , file = ssa_fn , compress = FALSE )
 # ssa_df <- readRDS( ssa_fn )
