@@ -160,6 +160,21 @@ ssa_dt <- data.table( ssa_df )
 ssa_dt[ , mean( tot_cov_earn3706 ) ]
 
 ssa_dt[ , mean( tot_cov_earn3706 ) , by = sex ]
+library(duckdb)
+con <- dbConnect( duckdb::duckdb() , dbdir = 'my-db.duckdb' )
+dbWriteTable( con , 'ssa' , ssa_df )
+dbGetQuery( con , 'SELECT AVG( tot_cov_earn3706 ) FROM ssa' )
+
+dbGetQuery(
+	con ,
+	'SELECT
+		sex ,
+		AVG( tot_cov_earn3706 )
+	FROM
+		ssa
+	GROUP BY
+		sex'
+)
 chart_five_results <- prop.table( table( ssa_df[ , 'earnings_periods' ] ) )
 chart_five_results <- round( 100 * chart_five_results )
 
