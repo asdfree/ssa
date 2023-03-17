@@ -147,6 +147,23 @@ glm_result <-
 	)
 
 summary( glm_result )
+chart_five_results <- prop.table( table( ssa_df[ , 'earnings_periods' ] ) )
+chart_five_results <- round( 100 * chart_five_results )
+
+stopifnot( chart_five_results[ 'Earnings in both periods' ] == 16 )
+stopifnot( chart_five_results[ 'Earnings during 1951-2006 only' ] == 55 )
+stopifnot( chart_five_results[ 'Earnings during 1937-1950 only' ] == 4 )
+stopifnot( chart_five_results[ 'No earnings' ] == 25 )
+nonzero_2006_earners <- ssa_df[ ssa_df[ , 'tot_cov_earn06' ] > 0 , 'tot_cov_earn06' ]
+stopifnot( round( mean( nonzero_2006_earners ) , 0 ) == 30953 )
+stopifnot( round( quantile( nonzero_2006_earners )[ 3 ] , 0 ) == 24000 )
+nonzero_2006_earners <- ssa_df[ ssa_df[ , 'tot_cov_earn06' ] > 0 , ]
+stopifnot( round( mean( nonzero_2006_earners[ , 'tot_cov_earn06' ] ) , 0 ) == 30953 )
+stopifnot( round( quantile( nonzero_2006_earners[ , 'tot_cov_earn06' ] )[ 3 ] , 0 ) == 24000 )
+stopifnot( round( nrow( nonzero_2006_earners ) * 100 , -3 ) == 156280000 )
+earners_in_2006_by_sex <- table( nonzero_2006_earners[ , 'sex' ] ) * 100
+stopifnot( round( earners_in_2006_by_sex[ 'male' ] , -3 ) == 81576000 )
+stopifnot( round( earners_in_2006_by_sex[ 'female' ] , -3 ) == 74681000 )
 library(dplyr)
 ssa_tbl <- as_tibble( ssa_df )
 ssa_tbl %>%
@@ -175,20 +192,3 @@ dbGetQuery(
 	GROUP BY
 		sex'
 )
-chart_five_results <- prop.table( table( ssa_df[ , 'earnings_periods' ] ) )
-chart_five_results <- round( 100 * chart_five_results )
-
-stopifnot( chart_five_results[ 'Earnings in both periods' ] == 16 )
-stopifnot( chart_five_results[ 'Earnings during 1951-2006 only' ] == 55 )
-stopifnot( chart_five_results[ 'Earnings during 1937-1950 only' ] == 4 )
-stopifnot( chart_five_results[ 'No earnings' ] == 25 )
-nonzero_2006_earners <- ssa_df[ ssa_df[ , 'tot_cov_earn06' ] > 0 , 'tot_cov_earn06' ]
-stopifnot( round( mean( nonzero_2006_earners ) , 0 ) == 30953 )
-stopifnot( round( quantile( nonzero_2006_earners )[ 3 ] , 0 ) == 24000 )
-nonzero_2006_earners <- ssa_df[ ssa_df[ , 'tot_cov_earn06' ] > 0 , ]
-stopifnot( round( mean( nonzero_2006_earners[ , 'tot_cov_earn06' ] ) , 0 ) == 30953 )
-stopifnot( round( quantile( nonzero_2006_earners[ , 'tot_cov_earn06' ] )[ 3 ] , 0 ) == 24000 )
-stopifnot( round( nrow( nonzero_2006_earners ) * 100 , -3 ) == 156280000 )
-earners_in_2006_by_sex <- table( nonzero_2006_earners[ , 'sex' ] ) * 100
-stopifnot( round( earners_in_2006_by_sex[ 'male' ] , -3 ) == 81576000 )
-stopifnot( round( earners_in_2006_by_sex[ 'female' ] , -3 ) == 74681000 )
