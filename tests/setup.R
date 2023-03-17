@@ -155,6 +155,11 @@ ssa_tbl %>%
 ssa_tbl %>%
 	group_by( sex ) %>%
 	summarize( mean = mean( tot_cov_earn3706 ) )
+library(data.table)
+ssa_dt <- data.table( ssa_df )
+ssa_dt[ , mean( tot_cov_earn3706 ) ]
+
+ssa_dt[ , mean( tot_cov_earn3706 ) , by = sex ]
 chart_five_results <- prop.table( table( ssa_df[ , 'earnings_periods' ] ) )
 chart_five_results <- round( 100 * chart_five_results )
 
