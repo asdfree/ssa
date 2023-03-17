@@ -1,6 +1,6 @@
-# 
-# 
-# 
+# annual earnings.
+# for pensioner payouts, see
+# the '04 extract
 library(haven)
 library(httr)
 
@@ -20,7 +20,7 @@ ssa_tbl <- read_sas( ssa_fn )
 
 annual_tbl <- read_sas( annual_fn )
 
-ssa_df <- data.frame( ssa_tbl ) ; 
+ssa_df <- data.frame( ssa_tbl )
 
 annual_df <- data.frame( annual_tbl )
 
