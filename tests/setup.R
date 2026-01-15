@@ -6,7 +6,7 @@ library(curl)
 
 h <- new_handle()
 
-handle_setopt( h , verbose = TRUE )
+handle_setopt( h , verbose = TRUE , useragent = "Mozilla/5.0 (compatible; data-download/1.0)" )
 
 tf <- tempfile()
 
