@@ -2,13 +2,13 @@
 # for pensioner payouts, see
 # the '04 extract
 library(haven)
-library(httr)
+library(curl)
 
 tf <- tempfile()
 
 ssa_url <- "https://www.ssa.gov/policy/docs/microdata/epuf/epuf2006_sas_files.zip"
 
-GET( ssa_url , write_disk( tf ) , progress() )
+curl_download( ssa_url , tf , mode = 'wb' )
 
 ssa_files <- unzip( tf , exdir = tempdir() )
 
