@@ -4,11 +4,15 @@
 library(haven)
 library(curl)
 
+h <- new_handle()
+
+handle_setopt( h , verbose = TRUE )
+
 tf <- tempfile()
 
 ssa_url <- "https://www.ssa.gov/policy/docs/microdata/epuf/epuf2006_sas_files.zip"
 
-curl_download( ssa_url , tf , mode = 'wb' )
+curl_download( ssa_url , tf , mode = 'wb' , handle = h )
 
 ssa_files <- unzip( tf , exdir = tempdir() )
 
