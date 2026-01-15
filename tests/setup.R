@@ -6,7 +6,7 @@ library(curl)
 
 h <- new_handle()
 
-handle_setopt( h , verbose = TRUE )
+handle_setopt( h , verbose = TRUE , http_version = 1L )
 
 tf <- tempfile()
 
